@@ -6,7 +6,7 @@ def text_objects(self, text, color, size):
     # Parameters for Render are: (text, antialias, color)
     text_surface = self.xs_font.render(text, True, color)
     if size == "xs":
-        text_surface = self.xs_font.render(text, False, color)
+        text_surface = self.xs_font.render(text, True, color)
     elif size == "s":
         text_surface = self.s_font.render(text, True, color)
     elif size == "m":
@@ -32,13 +32,15 @@ def button(self, text="", x=0, y=0, width=0, height=0,
         pygame.draw.rect(self.display, active_color, (x, y, width, height))
         if click[0] == 1:
             if action == "s":
-                self.start = True
-            if action == "p":
                 self.intro = False
             if action == "t":
+                self.intro = False
                 self.tutorial = True
+                self.game_tutorial()
             if action == "b":
-                pass
+                self.tutorial = False
+                self.intro = True
+                self.game_intro()
     else:
         pygame.draw.rect(self.display, inactive_color, (x, y, width, height))
 
