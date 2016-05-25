@@ -23,20 +23,15 @@ BULLET_SIZE = 6
 MENU_FPS = 15
 FPS = 30
 
-# In-game Settings
-
-money = 10
-lives = 10
-
 # - Tower cost
 t_cost_green = 5
 t_cost_blue = 10
 t_cost_yellow = 25
 t_cost_purple = 100
-b_green_aoe = 160
-b_blue_aoe = 200
-b_yellow_aoe = 240
-b_purple_aoe = 400
+t_green_aoe = 160
+t_blue_aoe = 200
+t_yellow_aoe = 240
+t_purple_aoe = 400
 
 # - Colors
 white = (255, 255, 255)

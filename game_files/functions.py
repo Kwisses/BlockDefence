@@ -34,13 +34,15 @@ def button(self, text="", x=0, y=0, width=0, height=0,
             if action == "s":
                 self.intro = False
             if action == "t":
-                self.intro = False
                 self.tutorial = True
                 self.game_tutorial()
             if action == "b":
                 self.tutorial = False
-                self.intro = True
                 self.game_intro()
+            if action == "twr":
+                self.b_color = inactive_color
+                self.cur_change = True
+                # self.purchase = True  # Need to find a better spot for this
     else:
         pygame.draw.rect(self.display, inactive_color, (x, y, width, height))
 
@@ -66,3 +68,48 @@ def text_to_button(self, display, text, color,
     text_rect.center = ((button_x + button_width / 2),
                         button_y + button_height / 2)
     display.blit(text_surf, text_rect)
+
+
+def block_mouse(self, color, cur):
+    block = pygame.draw.rect(self.display, color,
+                             (cur[0] - B_SIZE / 2,
+                              cur[1] - B_SIZE / 2,
+                              B_SIZE, B_SIZE))
+    self.display.blit(self.display, block, (cur[0] - B_SIZE / 2,
+                                            cur[1] - B_SIZE / 2,
+                                            B_SIZE, B_SIZE))
+
+
+def enough_money(self):
+    if self.b_color == green and self.money >= t_cost_green:
+        return True
+    elif self.b_color == blue and self.money >= t_cost_blue:
+        return True
+    elif self.b_color == yellow and self.money >= t_cost_yellow:
+        return True
+    elif self.b_color == purple and self.money >= t_cost_purple:
+        return True
+    else:
+        return False
+
+
+def not_enough_money(self):
+    if self.no_money_count == 30:
+        self.no_money_count = 0
+        self.cur_change = False
+    else:
+        label(self, "Not enough money!", black, size="s",
+              x_displace=ALERT1[0], y_displace=ALERT1[1])
+        self.no_money_count += 1
+
+
+def sub_money(self, color):
+    if color == green:
+        self.money -= t_cost_green
+    elif color == blue:
+        self.money -= t_cost_blue
+    elif color == yellow:
+        self.money -= t_cost_yellow
+    elif color == purple:
+        self.money -= t_cost_purple
+    self.purchase = False
