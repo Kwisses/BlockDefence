@@ -1,5 +1,6 @@
 import pygame
 from BlockDefence.game_files.settings import *
+from BlockDefence.game_files.classes.towers import *
 
 
 def text_objects(self, text, color, size):
@@ -42,6 +43,13 @@ def button(self, text="", x=0, y=0, width=0, height=0,
             if action == "twr":
                 self.b_color = inactive_color
                 self.cur_change = True
+
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONUP:
+                        if event.button == 1:
+                            tower = Tower(cur)
+                            self.towers.append(tower)
+
                 # self.purchase = True  # Need to find a better spot for this
     else:
         pygame.draw.rect(self.display, inactive_color, (x, y, width, height))

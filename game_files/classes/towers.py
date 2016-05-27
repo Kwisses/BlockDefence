@@ -31,6 +31,17 @@ def set_towers(self, colors, coords):
                                   coord[1] - B_SIZE / 2,
                                   B_SIZE, B_SIZE))
 
+        aoe = pygame.draw.rect(self.display, colors[i],
+                                 (coord[0] - t_green_aoe / 2,
+                                  coord[1] - t_green_aoe / 2,
+                                  t_green_aoe, t_green_aoe), 1)
+
         self.display.blit(self.display, block, (coord[0] - B_SIZE / 2,
                                                 coord[1] - B_SIZE / 2,
                                                 B_SIZE, B_SIZE))
+
+        self.display.blit(self.display, aoe, (coord[0] - t_green_aoe / 2,
+                                              coord[1] - t_green_aoe / 2,
+                                              t_green_aoe, t_green_aoe))
+
+

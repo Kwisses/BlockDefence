@@ -39,6 +39,7 @@ class App:
         self.b_color = green
         self.b_colors = []
         self.t_coords = []
+        self.towers = []
 
         # In-game settings
         self.money = 1000
