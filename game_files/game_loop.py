@@ -1,5 +1,6 @@
 from BlockDefence.game_files.functions import *
 # from BlockDefence.game_files.settings import *
+from BlockDefence.game_files.classes.enemies import *
 from BlockDefence.game_files.classes.towers import *
 
 
@@ -19,6 +20,7 @@ class App:
         # Game Logic
         self.intro = True
         self.tutorial = False
+        self.start = True
         self.pause = False
         self.game_over = False
         self.game_exit = False
@@ -40,6 +42,7 @@ class App:
         self.b_colors = []
         self.t_coords = []
         self.towers = []
+        self.enemies = []
 
         # In-game settings
         self.money = 1000
@@ -186,6 +189,9 @@ class App:
 
             # Function calls
             set_towers(self, self.b_colors, self.t_coords)
+
+            # Testing this function...
+            Enemy(self.display, green).update()
 
             # Conditionals
             if self.purchase:
