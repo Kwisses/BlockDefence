@@ -2,81 +2,83 @@ import pygame
 from BlockDefence.game_files.settings import *
 
 
-class Enemy:
+class Enemy(pygame.sprite.Sprite):
 
-    def __init__(self, display, color):
+    def __init__(self, display, color, enemies):
+        pygame.sprite.Sprite.__init__(self)
         self.display = display
         self.color = color
+        self.enemies = enemies
 
-        self.x = 710
-        self.y = 0
+        self.image = pygame.Surface([B_SIZE, B_SIZE])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
 
-        self.health = 0
-        self.speed = 0
+        self.rect.x = 710
+        self.rect.y = 0
 
         self.up = False
         self.down = True
         self.left = False
         self.right = False
 
+        self.health = 0
+        self.speed = 0
+
+        self.enemies.add(self)
+
     def green(self):
         self.health = 5
         self.speed = 1
 
-    def move(self):
-        if self.up:
-            self.y -= 1
-        elif self.down:
-            self.y += 1
-        elif self.left:
-            self.x -= 1
-        elif self.right:
-            self.x += 1
+    def draw(self):
+        self.enemies.draw(self.display)
+        return self.rect.x, self.rect.y
 
     def direction(self):
-        if self.x == 710 and self.y == 206:
+        if self.rect.x == 710 and self.rect.y == 206:
             self.down = False
             self.left = True
-        elif self.x == 590 and self.y == 206:
+        elif self.rect.x == 590 and self.rect.y == 206:
             self.left = False
             self.up = True
-        elif self.x == 590 and self.y == 60:
+        elif self.rect.x == 590 and self.rect.y == 60:
             self.up = False
             self.left = True
-        elif self.x == 470 and self.y == 60:
+        elif self.rect.x == 470 and self.rect.y == 60:
             self.left = False
             self.down = True
-        elif self.x == 470 and self.y == 206:
+        elif self.rect.x == 470 and self.rect.y == 206:
             self.down = False
             self.left = True
-        elif self.x == 350 and self.y == 206:
+        elif self.rect.x == 350 and self.rect.y == 206:
             self.left = False
             self.up = True
-        elif self.x == 350 and self.y == 60:
+        elif self.rect.x == 350 and self.rect.y == 60:
             self.up = False
             self.left = True
-        elif self.x == 246 and self.y == 60:
+        elif self.rect.x == 246 and self.rect.y == 60:
             self.left = False
             self.down = True
-        elif self.x == 246 and self.y == 326:
+        elif self.rect.x == 246 and self.rect.y == 326:
             self.down = False
             self.right = True
-        elif self.x == 722 and self.y == 326:
+        elif self.rect.x == 722 and self.rect.y == 326:
             self.right = False
             self.down = True
-        elif self.x == 722 and self.y == 524:
+        elif self.rect.x == 722 and self.rect.y == 524:
             self.down = False
             self.left = True
-        elif self.x == 200 and self.y == 524:
+        elif self.rect.x == 200 and self.rect.y == 524:
             self.left = False
+        return [self.rect.x, self.rect.y]
 
     def update(self):
-        self.move()
-        self.direction()
-        create_enemy(self.display, self.color, self.x, self.y)
-        return self.x, self.y
-
-
-def create_enemy(display, color, x, y):
-    block = pygame.draw.rect(display, color, (x, y, B_SIZE, B_SIZE))
-    display.blit(display, block, (x, y, B_SIZE, B_SIZE))
+        if self.up:
+            self.rect.y -= 1
+        elif self.down:
+            self.rect.y += 1
+        elif self.left:
+            self.rect.x -= 1
+        elif self.right:
+            self.rect.x += 1

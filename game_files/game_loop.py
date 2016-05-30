@@ -1,6 +1,7 @@
 from BlockDefence.game_files.functions import *
 # from BlockDefence.game_files.settings import *
 from BlockDefence.game_files.classes.enemies import *
+from BlockDefence.game_files.classes.levels import *
 from BlockDefence.game_files.classes.towers import *
 
 
@@ -42,7 +43,10 @@ class App:
         self.b_colors = []
         self.t_coords = []
         self.towers = []
-        self.enemies = []
+        self.enemies = pygame.sprite.Group()
+
+        # Enemies
+        self.level_1 = LevelOne(self.display, self.enemies)
 
         # In-game settings
         self.money = 1000
@@ -190,8 +194,8 @@ class App:
             # Function calls
             set_towers(self, self.b_colors, self.t_coords)
 
-            # Testing this function...
-            Enemy(self.display, green).update()
+            # Enemy calls...
+            self.level_1.show()
 
             # Conditionals
             if self.purchase:
