@@ -17,7 +17,8 @@ menu_height = 600
 ALERT1 = (200, 0)
 ALERT2 = (200, 565)
 PATH_CENTER = 86 / 2
-B_SPAWN = 682
+B_SPAWN_X = 710
+B_SPAWN_Y = -30
 B_SIZE = 30
 BULLET_SIZE = 6
 MENU_FPS = 15
@@ -48,3 +49,7 @@ yellow = (200, 200, 0)
 l_yellow = (255, 255, 0)
 purple = (200, 0, 200)
 l_purple = (255, 0, 255)
+
+# In-game Settings
+money = 1000
+lives = 10

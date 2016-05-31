@@ -32,13 +32,19 @@ def button(self, text="", x=0, y=0, width=0, height=0,
     if x + width > cur[0] > x and y + height > cur[1] > y:
         pygame.draw.rect(self.display, active_color, (x, y, width, height))
         if click[0] == 1:
-            if action == "s":
+            if action == "p":
+                self.game_exit = False
+                self.tutorial = False
                 self.intro = False
+            if action == "s":
+                self.start_level = True
             if action == "t":
                 self.tutorial = True
+                self.intro = False
                 self.game_tutorial()
             if action == "b":
                 self.tutorial = False
+                self.intro = True
                 self.game_intro()
             if action == "twr":
                 self.b_color = inactive_color

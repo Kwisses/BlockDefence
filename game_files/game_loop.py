@@ -9,6 +9,9 @@ class App:
     def __init__(self):
         pygame.init()
 
+        self.money = money
+        self.lives = 0  # lives
+
         # Display
         self.display = pygame.display.set_mode((main_width, main_height))
         self.icon = pygame.image.load(icon_path)
@@ -23,7 +26,7 @@ class App:
         self.tutorial = False
         self.start = True
         self.pause = False
-        self.game_over = False
+        self.over = False
         self.game_exit = False
 
         self.purchase = False
@@ -31,6 +34,8 @@ class App:
 
         self.cur_change = False
         self.t_place = False
+
+        self.start_level = False
 
         # - Font size
         self.xs_font = pygame.font.SysFont("comicsansms", 15)
@@ -45,16 +50,12 @@ class App:
         self.towers = []
         self.enemies = pygame.sprite.Group()
 
-        # Enemies
-        self.level_1 = LevelOne(self.display, self.enemies)
-
-        # In-game settings
-        self.money = 1000
-        self.lives = 10
+        # Levels (contains enemy init)
+        self.level_1 = LevelOne(self, self.display, self.enemies, self.CLOCK)
 
     def game_intro(self):
         self.CLOCK.tick(MENU_FPS)
-        self.display.fill(black, [0, 0, menu_width, menu_height])
+        self.display.fill(black)
         self.display.blit(self.icon_bg, (main_width / 8, 15))
 
         label(self, "Block Defense", white, size="l",
@@ -66,7 +67,7 @@ class App:
             button(self, text="Play", x=main_width / 8 + 75,
                    y=main_height - 100,
                    width=125, height=50,
-                   inactive_color=green, active_color=l_green, action="s")
+                   inactive_color=green, active_color=l_green, action="p")
 
             button(self, text="Tutorial", x=main_width / 8 + 395,
                    y=main_height - 100, width=125, height=50,
@@ -133,6 +134,35 @@ class App:
                     if event.key == pygame.K_p:
                         self.pause = False
 
+    def game_over(self):
+        self.CLOCK.tick(MENU_FPS)
+
+        label(self, "GAME OVER", black, size="m",
+              x_displace=main_width / 2 - 40,
+              y_displace=main_height / 3 - 25)
+
+        label(self, "Press Enter for main menu", black, size="s",
+              x_displace=main_width / 2 - 50,
+              y_displace=main_height / 2 + 25)
+
+        while self.over:
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.__init__()
+                        self.display.fill(black)
+                        self.game_exit = True
+                        self.over = False
+                        self.intro = True
+                        self.game_intro()
+
+            pygame.display.update()
+
     def game_loop(self):
         self.game_intro()
 
@@ -194,8 +224,15 @@ class App:
             # Function calls
             set_towers(self, self.b_colors, self.t_coords)
 
-            # Enemy calls...
-            self.level_1.show()
+            # Game Over
+            if not self.lives:
+                self.over = True
+                self.game_over()
+
+            # Life Handler
+            for enemy in self.enemies:
+                if enemy.rect.x == 200 and enemy.rect.y == 524:
+                    self.lives -= 1
 
             # Conditionals
             if self.purchase:
@@ -211,6 +248,11 @@ class App:
                 self.t_place = True
             else:
                 self.t_place = False
+
+            if self.start_level:
+                self.level_1.show()
+                if not self.enemies:
+                    self.start_level = False
 
             # Event Handler
             for event in pygame.event.get():

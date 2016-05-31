@@ -14,8 +14,8 @@ class Enemy(pygame.sprite.Sprite):
         self.image.fill(color)
         self.rect = self.image.get_rect()
 
-        self.rect.x = 710
-        self.rect.y = 0
+        self.rect.x = B_SPAWN_X
+        self.rect.y = B_SPAWN_Y
 
         self.up = False
         self.down = True
@@ -23,7 +23,7 @@ class Enemy(pygame.sprite.Sprite):
         self.right = False
 
         self.health = 0
-        self.speed = 0
+        self.speed = 2
 
         self.enemies.add(self)
 
@@ -35,7 +35,7 @@ class Enemy(pygame.sprite.Sprite):
         self.enemies.draw(self.display)
         return self.rect.x, self.rect.y
 
-    def direction(self):
+    def direction(self, total_lives):
         if self.rect.x == 710 and self.rect.y == 206:
             self.down = False
             self.left = True
@@ -70,15 +70,17 @@ class Enemy(pygame.sprite.Sprite):
             self.down = False
             self.left = True
         elif self.rect.x == 200 and self.rect.y == 524:
+            # total_lives -= 1  # Currently not working...
             self.left = False
+            self.enemies.remove(self)
         return [self.rect.x, self.rect.y]
 
     def update(self):
         if self.up:
-            self.rect.y -= 1
+            self.rect.y -= self.speed
         elif self.down:
-            self.rect.y += 1
+            self.rect.y += self.speed
         elif self.left:
-            self.rect.x -= 1
+            self.rect.x -= self.speed
         elif self.right:
-            self.rect.x += 1
+            self.rect.x += self.speed
