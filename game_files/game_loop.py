@@ -1,5 +1,6 @@
 from BlockDefence.game_files.functions import *
 # from BlockDefence.game_files.settings import *
+from BlockDefence.game_files.classes.bullets import *
 from BlockDefence.game_files.classes.enemies import *
 from BlockDefence.game_files.classes.levels import *
 from BlockDefence.game_files.classes.towers import *
@@ -9,8 +10,9 @@ class App:
     def __init__(self):
         pygame.init()
 
+        # In-game Settings
         self.money = money
-        self.lives = 0  # lives
+        self.lives = 1  # lives
 
         # Display
         self.display = pygame.display.set_mode((main_width, main_height))
@@ -47,6 +49,7 @@ class App:
         self.b_color = green
         self.b_colors = []
         self.t_coords = []
+        self.e_coords = []
         self.towers = []
         self.enemies = pygame.sprite.Group()
 
@@ -253,6 +256,9 @@ class App:
                 self.level_1.show()
                 if not self.enemies:
                     self.start_level = False
+
+            if self.e_coords:
+                set_bullets(self, self.t_coords, self.e_coords)
 
             # Event Handler
             for event in pygame.event.get():

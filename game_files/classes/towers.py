@@ -43,5 +43,3 @@ def set_towers(self, colors, coords):
         self.display.blit(self.display, aoe, (coord[0] - t_green_aoe / 2,
                                               coord[1] - t_green_aoe / 2,
                                               t_green_aoe, t_green_aoe))
-
-

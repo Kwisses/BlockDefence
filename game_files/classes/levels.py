@@ -35,6 +35,7 @@ class LevelOne:
             self.count = 0
 
         for enemy in self.enemy_instances[:self.spawn_range]:
+            self.app.e_coords.append([enemy])
             enemy.direction(self.app.lives)
             enemy.draw()
             enemy.update()
