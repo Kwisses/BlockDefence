@@ -1,4 +1,5 @@
 import pygame
+from BlockDefence.game_files.functions import *
 from BlockDefence.game_files.settings import *
 
 
@@ -23,19 +24,40 @@ class Enemy(pygame.sprite.Sprite):
         self.right = False
 
         self.health = 0
-        self.speed = 2
+        self.speed = 1
+
+        if self.color == green:
+            self.green()
+        elif self.color == blue:
+            self.blue()
+        elif self.color == yellow:
+            self.yellow()
+        elif self.color == purple:
+            self.purple()
 
         self.enemies.add(self)
 
     def green(self):
-        self.health = 5
-        self.speed = 1
+        self.health = green_health
+        self.speed = green_speed
+
+    def blue(self):
+        self.health = blue_health
+        self.speed = blue_speed
+
+    def yellow(self):
+        self.health = yellow_health
+        self.speed = yellow_speed
+
+    def purple(self):
+        self.health = purple_health
+        self.speed = purple_speed
 
     def draw(self):
         self.enemies.draw(self.display)
         return self.rect.x, self.rect.y
 
-    def direction(self, total_lives):
+    def direction(self):
         if self.rect.x == 710 and self.rect.y == 206:
             self.down = False
             self.left = True
@@ -70,12 +92,16 @@ class Enemy(pygame.sprite.Sprite):
             self.down = False
             self.left = True
         elif self.rect.x == 200 and self.rect.y == 524:
-            # total_lives -= 1  # Currently not working...
             self.left = False
             self.enemies.remove(self)
         return [self.rect.x, self.rect.y]
 
-    def update(self):
+    def update(self, app, e_coords):
+        if self.health == 0:
+            self.enemies.remove(self)
+            e_coords.remove(self)
+            add_money(app, self.color)
+
         if self.up:
             self.rect.y -= self.speed
         elif self.down:

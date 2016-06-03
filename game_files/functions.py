@@ -127,3 +127,14 @@ def sub_money(self, color):
     elif color == purple:
         self.money -= t_cost_purple
     self.purchase = False
+
+
+def add_money(self, color):
+    if color == green:
+        self.money += t_cost_green
+    elif color == blue:
+        self.money += t_cost_blue
+    elif color == yellow:
+        self.money += t_cost_yellow
+    elif color == purple:
+        self.money += t_cost_purple

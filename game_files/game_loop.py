@@ -54,7 +54,9 @@ class App:
         self.enemies = pygame.sprite.Group()
 
         # Levels (contains enemy init)
+        self.current_level = 1
         self.level_1 = LevelOne(self, self.display, self.enemies, self.CLOCK)
+        # self.level_2 = LevelTwo(self, self.display, self.enemies, self.CLOCK)
 
     def game_intro(self):
         self.CLOCK.tick(MENU_FPS)
@@ -252,10 +254,15 @@ class App:
             else:
                 self.t_place = False
 
+            # Level Handler
             if self.start_level:
-                self.level_1.show()
+                if self.current_level == 1:
+                    show(self.level_1)
+                elif self.current_level == 2:
+                    show(self.level_2)
                 if not self.enemies:
                     self.start_level = False
+                    self.current_level += 1
 
             if self.e_coords:
                 set_bullets(self, self.t_coords, self.e_coords)
