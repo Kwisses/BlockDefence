@@ -13,9 +13,7 @@ BlockDefence is a tower defence game made with Python and Pygame
 
 ## Game Screens ##
 
-There are 3 different game screens a player can navigate to: the main menu, the tutorial, and the main game. 
-
-Upon running the game, the player will be brought to the main menu:
+There are 3 different game screens a player can navigate to: the main menu, the tutorial, and the main game. Upon running the game, the player will be brought to the main menu:
 
 ### Main Menu ###
 
@@ -27,7 +25,7 @@ The player can either click the "Play" button to go to the main game, or click t
 
 ![](http://s33.postimg.org/mizze5kn3/blockdefence_tutorial.png)
 
-The player can click the "Back" button on the Tutorial screen to go back to the main menu.
+The player can click the "Back" button on the Tutorial screen to go back to the main menu. 
 
 Once the player clicks the "Play" button, the player will be brought to the main game screen:
 
