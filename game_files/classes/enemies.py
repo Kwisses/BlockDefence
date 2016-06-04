@@ -55,7 +55,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def draw(self):
         self.enemies.draw(self.display)
-        return self.rect.x, self.rect.y
+        # return self.rect.x, self.rect.y
 
     def direction(self):
         if self.rect.x == 710 and self.rect.y == 206:
@@ -98,9 +98,10 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self, app, e_coords):
         if self.health == 0:
-            self.enemies.remove(self)
-            e_coords.remove(self)
-            add_money(app, self.color)
+            if self in e_coords:
+                e_coords.remove(self)
+                self.enemies.remove(self)
+                add_money(app, self.color)
 
         if self.up:
             self.rect.y -= self.speed

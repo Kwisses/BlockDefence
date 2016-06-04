@@ -55,8 +55,11 @@ class App:
 
         # Levels (contains enemy init)
         self.current_level = 1
+
         self.level_1 = LevelOne(self, self.display, self.enemies, self.CLOCK)
-        # self.level_2 = LevelTwo(self, self.display, self.enemies, self.CLOCK)
+        self.level_2 = LevelTwo(self, self.display, self.enemies, self.CLOCK)
+
+        self.total_enemies = len(self.enemies)
 
     def game_intro(self):
         self.CLOCK.tick(MENU_FPS)
@@ -258,11 +261,11 @@ class App:
             if self.start_level:
                 if self.current_level == 1:
                     show(self.level_1)
+                    end_level(self, self.level_1.enemy_num)
+
                 elif self.current_level == 2:
                     show(self.level_2)
-                if not self.enemies:
-                    self.start_level = False
-                    self.current_level += 1
+                    end_level(self, self.level_2.enemy_num)
 
             if self.e_coords:
                 set_bullets(self, self.t_coords, self.e_coords)

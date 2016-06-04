@@ -138,3 +138,11 @@ def add_money(self, color):
         self.money += t_cost_yellow
     elif color == purple:
         self.money += t_cost_purple
+
+
+def end_level(self, enemy_num):
+    print(len(self.enemies), (self.total_enemies - enemy_num))
+    if len(self.enemies) <= self.total_enemies - enemy_num:
+        self.start_level = False
+        self.total_enemies -= enemy_num
+        self.current_level += 1

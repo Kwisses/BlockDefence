@@ -9,7 +9,6 @@ class Bullet:
 
     def in_range(self, t_coords, e_coords, aoe):
         for tower in t_coords:
-            # count = 0
             t_x, t_y = tower
             for e in e_coords:
                 e_x = e.rect.x
