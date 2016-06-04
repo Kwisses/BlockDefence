@@ -2,7 +2,7 @@
 
 
 # - Paths
-caption_path = "Block Defense"
+caption_path = "Block Defence"
 icon_path = "./game_files/images/logo.png"
 icon_bg_path = "./game_files/images/logo_bg.png"
 map1_path = "./game_files/images/map1.png"
@@ -14,8 +14,8 @@ menu_width = 200
 menu_height = 600
 
 # - Constants
-ALERT1 = (200, 0)
-ALERT2 = (200, 565)
+ALERT1 = (205, 0)
+ALERT2 = (205, 565)
 PATH_CENTER = 86 / 2
 B_SPAWN_X = 710
 B_SPAWN_Y = -30
@@ -41,8 +41,8 @@ purple = (200, 0, 200)
 l_purple = (255, 0, 255)
 
 # - In-game Settings
-money = 1000
-lives = 10
+money = 10
+lives = 3
 
 # - Tower cost
 t_cost_green = 5
@@ -54,11 +54,18 @@ t_blue_aoe = 200
 t_yellow_aoe = 240
 t_purple_aoe = 400
 
+# - Tower Damage
+t_green_dmg = 1
+t_blue_dmg = 1
+t_yellow_dmg = 2
+t_purple_dmg = 3
+
 # - Enemy Settings
 green_health = 100
 blue_health = 200
 yellow_health = 300
 purple_health = 500
+# speed can only be 1 or 2
 green_speed = 1
 blue_speed = 1
 yellow_speed = 2

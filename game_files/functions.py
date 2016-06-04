@@ -1,5 +1,3 @@
-import pygame
-from BlockDefence.game_files.settings import *
 from BlockDefence.game_files.classes.towers import *
 
 
@@ -55,8 +53,6 @@ def button(self, text="", x=0, y=0, width=0, height=0,
                         if event.button == 1:
                             tower = Tower(cur)
                             self.towers.append(tower)
-
-                # self.purchase = True  # Need to find a better spot for this
     else:
         pygame.draw.rect(self.display, inactive_color, (x, y, width, height))
 
@@ -85,13 +81,34 @@ def text_to_button(self, display, text, color,
 
 
 def block_mouse(self, color, cur):
+    aoe = t_green_aoe
+
+    if color == green:
+        aoe = t_green_aoe
+    elif color == blue:
+        aoe = t_blue_aoe
+    elif color == yellow:
+        aoe = t_yellow_aoe
+    elif color == purple:
+        aoe = t_purple_aoe
+
     block = pygame.draw.rect(self.display, color,
                              (cur[0] - B_SIZE / 2,
                               cur[1] - B_SIZE / 2,
                               B_SIZE, B_SIZE))
+
+    aoe_block = pygame.draw.rect(self.display, color,
+                                 (cur[0] - aoe / 2,
+                                  cur[1] - aoe / 2,
+                                  aoe, aoe), 1)
+
     self.display.blit(self.display, block, (cur[0] - B_SIZE / 2,
                                             cur[1] - B_SIZE / 2,
                                             B_SIZE, B_SIZE))
+
+    self.display.blit(self.display, aoe_block, (cur[0] - aoe / 2,
+                                                cur[1] - aoe / 2,
+                                                aoe, aoe))
 
 
 def enough_money(self):
@@ -131,17 +148,16 @@ def sub_money(self, color):
 
 def add_money(self, color):
     if color == green:
-        self.money += t_cost_green
+        self.money += 1
     elif color == blue:
-        self.money += t_cost_blue
+        self.money += 2
     elif color == yellow:
-        self.money += t_cost_yellow
+        self.money += 3
     elif color == purple:
-        self.money += t_cost_purple
+        self.money += 4
 
 
 def end_level(self, enemy_num):
-    print(len(self.enemies), (self.total_enemies - enemy_num))
     if len(self.enemies) <= self.total_enemies - enemy_num:
         self.start_level = False
         self.total_enemies -= enemy_num

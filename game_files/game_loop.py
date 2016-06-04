@@ -1,7 +1,4 @@
-from BlockDefence.game_files.functions import *
-# from BlockDefence.game_files.settings import *
 from BlockDefence.game_files.classes.bullets import *
-from BlockDefence.game_files.classes.enemies import *
 from BlockDefence.game_files.classes.levels import *
 from BlockDefence.game_files.classes.towers import *
 
@@ -12,13 +9,14 @@ class App:
 
         # In-game Settings
         self.money = money
-        self.lives = 1  # lives
+        self.lives = lives
 
         # Display
         self.display = pygame.display.set_mode((main_width, main_height))
         self.icon = pygame.image.load(icon_path)
         self.icon_bg = pygame.image.load(icon_bg_path).convert()
-        self.caption = pygame.display.set_caption(caption_path)
+        self.set_caption = pygame.display.set_caption(caption_path)
+        self.set_icon = pygame.display.set_icon(self.icon)
 
         self.MAP1 = pygame.image.load(map1_path).convert()
         self.CLOCK = pygame.time.Clock()
@@ -29,6 +27,7 @@ class App:
         self.start = True
         self.pause = False
         self.over = False
+        self.win = False
         self.game_exit = False
 
         self.purchase = False
@@ -58,6 +57,14 @@ class App:
 
         self.level_1 = LevelOne(self, self.display, self.enemies, self.CLOCK)
         self.level_2 = LevelTwo(self, self.display, self.enemies, self.CLOCK)
+        self.level_3 = LevelThree(self, self.display, self.enemies, self.CLOCK)
+        self.level_4 = LevelFour(self, self.display, self.enemies, self.CLOCK)
+        self.level_5 = LevelFive(self, self.display, self.enemies, self.CLOCK)
+        self.level_6 = LevelSix(self, self.display, self.enemies, self.CLOCK)
+        self.level_7 = LevelSeven(self, self.display, self.enemies, self.CLOCK)
+        self.level_8 = LevelEight(self, self.display, self.enemies, self.CLOCK)
+        self.level_9 = LevelNine(self, self.display, self.enemies, self.CLOCK)
+        self.level_10 = LevelTen(self, self.display, self.enemies, self.CLOCK)
 
         self.total_enemies = len(self.enemies)
 
@@ -66,7 +73,7 @@ class App:
         self.display.fill(black)
         self.display.blit(self.icon_bg, (main_width / 8, 15))
 
-        label(self, "Block Defense", white, size="l",
+        label(self, "Block Defence", white, size="l",
               x_displace=main_width / 8 + 50,
               y_displace=-20)
 
@@ -96,13 +103,14 @@ class App:
               x_displace=main_width / 4 + 60,
               y_displace=0)
 
-        label(self, "Destroy all blocks before they reach you", white,
+        label(self, "- Destroy all blocks before they reach the end", white,
               size="s", x_displace=100, y_displace=200)
-        label(self, "Use the Menu on the left to build turrets", white,
+        label(self, "- Use the Menu on the left to build towers", white,
               size="s", x_displace=100, y_displace=250)
-
-        label(self, "You have 10 lives and 10 levels to beat; P to pause",
+        label(self, "- You have 3 lives and 10 levels to beat",
               white, size="s", x_displace=100, y_displace=300)
+        label(self, "- Press P to pause the game",
+              white, size="s", x_displace=100, y_displace=350)
 
         while self.tutorial:
 
@@ -171,14 +179,48 @@ class App:
 
             pygame.display.update()
 
+    def game_win(self):
+        self.CLOCK.tick(MENU_FPS)
+
+        label(self, "You Win!", black, size="m",
+              x_displace=main_width / 2 - 75,
+              y_displace=main_height / 3 - 25)
+
+        label(self, "Press Enter for main menu", black, size="s",
+              x_displace=main_width / 2 - 50,
+              y_displace=main_height / 2 + 25)
+
+        while self.win:
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.__init__()
+                        self.display.fill(black)
+                        self.current_level = 1
+                        self.game_exit = True
+                        self.over = False
+                        self.intro = True
+                        self.game_intro()
+
+            pygame.display.update()
+
     def game_loop(self):
         self.game_intro()
 
         while not self.game_exit:
             self.CLOCK.tick(FPS)
+            self.display.blit(self.MAP1, (menu_width, 0))
+
+            # Sets Purchased Towers
+            # - function call placed here to avoid aoe bleed into menu.
+            set_towers(self, self.b_colors, self.t_coords)
 
             self.display.fill(black, [0, 0, menu_width, menu_height])
-            self.display.blit(self.MAP1, (menu_width, 0))
 
             cursor = list(pygame.mouse.get_pos())
             pix_color = self.display.get_at(pygame.mouse.get_pos())
@@ -229,29 +271,32 @@ class App:
                    width=B_SIZE, height=B_SIZE, inactive_color=purple,
                    active_color=l_purple, action="twr")
 
-            # Function calls
-            set_towers(self, self.b_colors, self.t_coords)
-
             # Game Over
             if not self.lives:
                 self.over = True
                 self.game_over()
+
+            if self.current_level == 11:
+                self.win = True
+                self.game_win()
 
             # Life Handler
             for enemy in self.enemies:
                 if enemy.rect.x == 200 and enemy.rect.y == 524:
                     self.lives -= 1
 
-            # Conditionals
+            # Tower Purchase
             if self.purchase:
                 sub_money(self, self.b_color)
 
+            # Cursor Change
             if self.cur_change:
                 if enough_money(self):
                     block_mouse(self, self.b_color, cursor)
                 else:
                     not_enough_money(self)
 
+            # Tower Placement (only on red)
             if pix_color == l_red:
                 self.t_place = True
             else:
@@ -261,14 +306,38 @@ class App:
             if self.start_level:
                 if self.current_level == 1:
                     show(self.level_1)
-                    end_level(self, self.level_1.enemy_num)
-
+                    end_level(self, self.level_1.total_enemies)
                 elif self.current_level == 2:
                     show(self.level_2)
-                    end_level(self, self.level_2.enemy_num)
+                    end_level(self, self.level_2.total_enemies)
+                elif self.current_level == 3:
+                    show(self.level_3)
+                    end_level(self, self.level_3.total_enemies)
+                elif self.current_level == 4:
+                    show(self.level_4)
+                    end_level(self, self.level_4.total_enemies)
+                elif self.current_level == 5:
+                    show(self.level_5)
+                    end_level(self, self.level_5.total_enemies)
+                elif self.current_level == 6:
+                    show(self.level_6)
+                    end_level(self, self.level_6.total_enemies)
+                elif self.current_level == 7:
+                    show(self.level_7)
+                    end_level(self, self.level_7.total_enemies)
+                elif self.current_level == 8:
+                    show(self.level_8)
+                    end_level(self, self.level_8.total_enemies)
+                elif self.current_level == 9:
+                    show(self.level_9)
+                    end_level(self, self.level_9.total_enemies)
+                elif self.current_level == 10:
+                    show(self.level_10)
+                    end_level(self, self.level_10.total_enemies)
 
+            # Bullet Handler
             if self.e_coords:
-                set_bullets(self, self.t_coords, self.e_coords)
+                set_bullets(self, self.t_coords, self.e_coords, self.b_colors)
 
             # Event Handler
             for event in pygame.event.get():
@@ -288,6 +357,8 @@ class App:
                             self.b_colors.append(self.b_color)
                             self.cur_change = False
                             self.purchase = True  # -- So far, best spot
+                    if event.button == 3:
+                        self.cur_change = False
 
             pygame.display.update()
 

@@ -1,4 +1,3 @@
-import pygame
 from BlockDefence.game_files.functions import *
 from BlockDefence.game_files.settings import *
 
@@ -55,7 +54,6 @@ class Enemy(pygame.sprite.Sprite):
 
     def draw(self):
         self.enemies.draw(self.display)
-        # return self.rect.x, self.rect.y
 
     def direction(self):
         if self.rect.x == 710 and self.rect.y == 206:
@@ -97,7 +95,7 @@ class Enemy(pygame.sprite.Sprite):
         return [self.rect.x, self.rect.y]
 
     def update(self, app, e_coords):
-        if self.health == 0:
+        if self.health <= 0:
             if self in e_coords:
                 e_coords.remove(self)
                 self.enemies.remove(self)
