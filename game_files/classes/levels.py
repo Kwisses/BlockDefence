@@ -4,8 +4,13 @@ from BlockDefence.game_files.settings import *
 
 
 class LevelOne(object):
+    """Define parameters for all other levels to inherit.
+
+    LevelOne is considered the Parent class.
+    """
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         self.app = app
         self.display = display
         self.enemies = enemies
@@ -23,12 +28,15 @@ class LevelOne(object):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemies(self, green)
 
 
 class LevelTwo(LevelOne):
+    """Set LevelTwo and inherit parameters from LevelOne."""
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         super().__init__(app, display, enemies, clock)
 
         self.level_text = "Level 2"
@@ -43,14 +51,17 @@ class LevelTwo(LevelOne):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemies(self, green)
         create_enemy(self, blue)
         create_enemy(self, blue)
 
 
 class LevelThree(LevelOne):
+    """Set LevelThree and inherit parameters from LevelOne."""
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         super().__init__(app, display, enemies, clock)
 
         self.level_text = "Level 3"
@@ -65,14 +76,17 @@ class LevelThree(LevelOne):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemies(self, green)
         create_enemies(self, blue)
         create_enemy(self, yellow)
 
 
 class LevelFour(LevelOne):
+    """Set LevelFour and inherit parameters from LevelOne."""
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         super().__init__(app, display, enemies, clock)
 
         self.level_text = "Level 4"
@@ -87,14 +101,17 @@ class LevelFour(LevelOne):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemy(self, green)
         create_enemies(self, blue)
         create_enemies(self, yellow)
 
 
 class LevelFive(LevelOne):
+    """Set LevelFive and inherit parameters from LevelOne."""
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         super().__init__(app, display, enemies, clock)
 
         self.level_text = "Level 5"
@@ -109,6 +126,7 @@ class LevelFive(LevelOne):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemies(self, green)
         create_enemies(self, blue)
         create_enemies(self, blue)
@@ -117,8 +135,10 @@ class LevelFive(LevelOne):
 
 
 class LevelSix(LevelOne):
+    """Set LevelSix and inherit parameters from LevelOne."""
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         super().__init__(app, display, enemies, clock)
 
         self.level_text = "Level 6"
@@ -133,6 +153,7 @@ class LevelSix(LevelOne):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemies(self, green)
         create_enemies(self, blue)
         create_enemies(self, yellow)
@@ -141,8 +162,10 @@ class LevelSix(LevelOne):
 
 
 class LevelSeven(LevelOne):
+    """Set LevelSeven and inherit parameters from LevelOne."""
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         super().__init__(app, display, enemies, clock)
 
         self.level_text = "Level 7"
@@ -157,6 +180,7 @@ class LevelSeven(LevelOne):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemies(self, green)
         create_enemies(self, green)
         create_enemies(self, blue)
@@ -165,8 +189,10 @@ class LevelSeven(LevelOne):
 
 
 class LevelEight(LevelOne):
+    """Set LevelEight and inherit parameters from LevelOne."""
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         super().__init__(app, display, enemies, clock)
 
         self.level_text = "Level 8"
@@ -181,6 +207,7 @@ class LevelEight(LevelOne):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemies(self, green)
         create_enemy(self, yellow)
         create_enemies(self, blue)
@@ -189,8 +216,10 @@ class LevelEight(LevelOne):
 
 
 class LevelNine(LevelOne):
+    """Set LevelNine and inherit parameters from LevelOne."""
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         super().__init__(app, display, enemies, clock)
 
         self.level_text = "Level 9"
@@ -205,6 +234,7 @@ class LevelNine(LevelOne):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemies(self, green)
         create_enemies(self, blue)
         create_enemies(self, yellow)
@@ -215,8 +245,10 @@ class LevelNine(LevelOne):
 
 
 class LevelTen(LevelOne):
+    """Set LevelTen and inherit parameters from LevelOne."""
 
     def __init__(self, app, display, enemies, clock):
+        """Initiates how many enemies to spawn and their spawn time."""
         super().__init__(app, display, enemies, clock)
 
         self.level_text = "Level 10"
@@ -231,6 +263,7 @@ class LevelTen(LevelOne):
         self.spawn_range = 0
         self.count = 0
 
+        # Enemy Spawning
         create_enemies(self, green)
         create_enemies(self, blue)
         create_enemies(self, yellow)
@@ -244,6 +277,14 @@ class LevelTen(LevelOne):
 
 
 def create_enemies(self, color):
+    """Create x number of Enemy instances.
+
+    Used to create a batch of enemies of the same color.
+
+    Args:
+        self (class App): Main game class.
+        color (tuple): Color of enemy block.
+    """
     for enemy in range(self.group_enemies):
         cpu_enemy = Enemy(self.display, color, self.enemies)
         self.enemy_instances.append(cpu_enemy)
@@ -251,12 +292,23 @@ def create_enemies(self, color):
 
 
 def create_enemy(self, color):
+    """Create one Enemy instance.
+
+    Args:
+        self (class App): Main game class.
+        color (tuple): Color of enemy block.
+    """
     cpu_enemy = Enemy(self.display, color, self.enemies)
     self.enemy_instances.append(cpu_enemy)
     self.app.e_coords.append(cpu_enemy)
 
 
 def show(self):
+    """Show (blit) enemy instances for the current level.
+
+    Args:
+        self (class App): Main game class.
+    """
     label(self.app, self.level_text, black, size="s",
           x_displace=ALERT2[0], y_displace=ALERT2[1])
     self.count += self.clock.tick(FPS * 2)

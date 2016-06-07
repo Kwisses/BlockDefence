@@ -4,7 +4,10 @@ from BlockDefence.game_files.classes.towers import *
 
 
 class App:
+    """Contains the main game screens and the main game loop."""
+
     def __init__(self):
+        """Set game display settings, game logic, fonts, and levels."""
         pygame.init()
 
         # In-game Settings
@@ -17,7 +20,6 @@ class App:
         self.icon_bg = pygame.image.load(icon_bg_path).convert()
         self.set_caption = pygame.display.set_caption(caption_path)
         self.set_icon = pygame.display.set_icon(self.icon)
-
         self.MAP1 = pygame.image.load(map1_path).convert()
         self.CLOCK = pygame.time.Clock()
 
@@ -69,6 +71,7 @@ class App:
         self.total_enemies = len(self.enemies)
 
     def game_intro(self):
+        """Display the main menu for the game."""
         self.CLOCK.tick(MENU_FPS)
         self.display.fill(black)
         self.display.blit(self.icon_bg, (main_width / 8, 15))
@@ -83,7 +86,6 @@ class App:
                    y=main_height - 100,
                    width=125, height=50,
                    inactive_color=green, active_color=l_green, action="p")
-
             button(self, text="Tutorial", x=main_width / 8 + 395,
                    y=main_height - 100, width=125, height=50,
                    inactive_color=green, active_color=l_green, action="t")
@@ -96,13 +98,13 @@ class App:
             pygame.display.update()
 
     def game_tutorial(self):
+        """Display the tutorial screen for the game."""
         self.CLOCK.tick(MENU_FPS)
         self.display.fill(black)
 
         label(self, "Tutorial", white, size="l",
               x_displace=main_width / 4 + 60,
               y_displace=0)
-
         label(self, "- Destroy all blocks before they reach the end", white,
               size="s", x_displace=100, y_displace=200)
         label(self, "- Use the Menu on the left to build towers", white,
@@ -127,12 +129,12 @@ class App:
             pygame.display.update()
 
     def game_pause(self):
+        """Display the pause screen in game_loop()."""
         self.CLOCK.tick(MENU_FPS)
 
         label(self, "Paused", black, size="m",
               x_displace=main_width / 2 - 50,
               y_displace=main_height / 3 - 25)
-
         label(self, "Press P to continue", black, size="m",
               x_displace=main_width / 2 - 150,
               y_displace=main_height / 2)
@@ -151,12 +153,12 @@ class App:
                         self.pause = False
 
     def game_over(self):
+        """Display the game-over screen in game_loop()."""
         self.CLOCK.tick(MENU_FPS)
 
         label(self, "GAME OVER", black, size="m",
               x_displace=main_width / 2 - 40,
               y_displace=main_height / 3 - 25)
-
         label(self, "Press Enter for main menu", black, size="s",
               x_displace=main_width / 2 - 50,
               y_displace=main_height / 2 + 25)
@@ -170,8 +172,10 @@ class App:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
+                        # Resets the game parameters
                         self.__init__()
                         self.display.fill(black)
+                        self.current_level = 1
                         self.game_exit = True
                         self.over = False
                         self.intro = True
@@ -180,12 +184,12 @@ class App:
             pygame.display.update()
 
     def game_win(self):
+        """Display the win screen in game_loop()."""
         self.CLOCK.tick(MENU_FPS)
 
         label(self, "You Win!", black, size="m",
               x_displace=main_width / 2 - 75,
               y_displace=main_height / 3 - 25)
-
         label(self, "Press Enter for main menu", black, size="s",
               x_displace=main_width / 2 - 50,
               y_displace=main_height / 2 + 25)
@@ -199,6 +203,7 @@ class App:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
+                        # Resets the game parameters
                         self.__init__()
                         self.display.fill(black)
                         self.current_level = 1
@@ -210,14 +215,15 @@ class App:
             pygame.display.update()
 
     def game_loop(self):
+        """Display the game loop and handle game_over and game_win methods."""
         self.game_intro()
 
         while not self.game_exit:
             self.CLOCK.tick(FPS)
+
             self.display.blit(self.MAP1, (menu_width, 0))
 
-            # Sets Purchased Towers
-            # - function call placed here to avoid aoe bleed into menu.
+            # Sets Purchased Towers - placed here to avoid aoe bleed into menu.
             set_towers(self, self.b_colors, self.t_coords)
 
             self.display.fill(black, [0, 0, menu_width, menu_height])

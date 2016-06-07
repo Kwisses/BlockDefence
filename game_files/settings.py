@@ -1,5 +1,5 @@
 # Main Settings
-
+# -- Path, constants, and player/enemy parameters are defined here.
 
 # - Paths
 caption_path = "Block Defence"

@@ -2,7 +2,19 @@ from BlockDefence.game_files.classes.towers import *
 
 
 def text_objects(self, text, color, size):
-    # Parameters for Render are: (text, antialias, color)
+    """Render font based on a choice of four different sizes.
+
+    Parameters for Render are: (text, antialias, color).
+
+    Args:
+        self (class App): Main game class.
+        text (str): Text to be rendered.
+        color (tuple): Color of text.
+        size (str): Size of text.
+
+    Returns:
+        tuple: [0]=Font to be blit to display; [1]=rectangle for button.
+    """
     text_surface = self.xs_font.render(text, True, color)
     if size == "xs":
         text_surface = self.xs_font.render(text, True, color)
@@ -16,6 +28,16 @@ def text_objects(self, text, color, size):
 
 
 def label(self, text, color, size="s", x_displace=0, y_displace=0):
+    """Blit text to self.display.
+
+    Args:
+        self (class App):  Main game class.
+        text (str): Text to be blit.
+        color (tuple): Color of text.
+        size (str): Size of text.
+        x_displace (int): Starting x position for blit.
+        y_displace (int): Starting y position for blit.
+    """
     text_surf, text_rect = text_objects(self, text, color, size)
     text_rect = (x_displace, y_displace)
     self.display.blit(text_surf, text_rect)
@@ -23,7 +45,22 @@ def label(self, text, color, size="s", x_displace=0, y_displace=0):
 
 def button(self, text="", x=0, y=0, width=0, height=0,
            inactive_color=l_green, active_color=green, action=None):
+    """Blit a "button" to self.display and control some game logic.
 
+    Some of the game's logic is controlled here because it's easy to switch
+    screens from a button press.
+
+    Args:
+        self (class App): Main game class.
+        text (str): Text to be blit.
+        x (int): Starting x position on display for button.
+        y (int): Starting y position on display for button.
+        width (int): Width of button.
+        height (int): Height of button.
+        inactive_color (tuple): Color of button when mouse is not over it.
+        active_color (tuple): Color of button when mouse is over it.
+        action (str): Button action; links to game logic and function calls.
+    """
     cur = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
@@ -81,6 +118,13 @@ def text_to_button(self, display, text, color,
 
 
 def block_mouse(self, color, cur):
+    """Blit a colored block at the cur location.
+
+    Args:
+        self (class App): Main game class.
+        color (tuple): Color of block.
+        cur (list): Mouse x, y position.
+    """
     aoe = t_green_aoe
 
     if color == green:
@@ -92,26 +136,28 @@ def block_mouse(self, color, cur):
     elif color == purple:
         aoe = t_purple_aoe
 
-    block = pygame.draw.rect(self.display, color,
-                             (cur[0] - B_SIZE / 2,
-                              cur[1] - B_SIZE / 2,
-                              B_SIZE, B_SIZE))
-
-    aoe_block = pygame.draw.rect(self.display, color,
-                                 (cur[0] - aoe / 2,
-                                  cur[1] - aoe / 2,
-                                  aoe, aoe), 1)
+    block = pygame.draw.rect(self.display, color, (cur[0] - B_SIZE / 2,
+                             cur[1] - B_SIZE / 2, B_SIZE, B_SIZE))
+    aoe_block = pygame.draw.rect(self.display, color, (cur[0] - aoe / 2,
+                                 cur[1] - aoe / 2, aoe, aoe), 1)
 
     self.display.blit(self.display, block, (cur[0] - B_SIZE / 2,
                                             cur[1] - B_SIZE / 2,
                                             B_SIZE, B_SIZE))
-
     self.display.blit(self.display, aoe_block, (cur[0] - aoe / 2,
                                                 cur[1] - aoe / 2,
                                                 aoe, aoe))
 
 
 def enough_money(self):
+    """Check if player has enough money to purchase a tower.
+
+    Args:
+        self (class App): Main game class.
+
+    Returns:
+        bool: True if player has enough money; False otherwise.
+    """
     if self.b_color == green and self.money >= t_cost_green:
         return True
     elif self.b_color == blue and self.money >= t_cost_blue:
@@ -125,6 +171,11 @@ def enough_money(self):
 
 
 def not_enough_money(self):
+    """Blit not enough money message to screen.
+
+    Args:
+        self (class App): Main game class.
+    """
     if self.no_money_count == 30:
         self.no_money_count = 0
         self.cur_change = False
@@ -135,6 +186,12 @@ def not_enough_money(self):
 
 
 def sub_money(self, color):
+    """Subtract tower cost from player's money.
+
+    Args:
+        self (class App): Main game class.
+        color (tuple): Color of tower.
+    """
     if color == green:
         self.money -= t_cost_green
     elif color == blue:
@@ -147,6 +204,12 @@ def sub_money(self, color):
 
 
 def add_money(self, color):
+    """Add enemy kill reward to player's money.
+
+    Args:
+        self (class App): Main game class.
+        color (tuple): Color of tower.
+    """
     if color == green:
         self.money += 1
     elif color == blue:
@@ -158,6 +221,12 @@ def add_money(self, color):
 
 
 def end_level(self, enemy_num):
+    """Check to see if all enemies in current level are dead and ends level.
+
+    Args:
+        self (class App): Main game class.
+        enemy_num (int): Number of enemies in current level.
+    """
     if len(self.enemies) <= self.total_enemies - enemy_num:
         self.start_level = False
         self.total_enemies -= enemy_num

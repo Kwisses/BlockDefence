@@ -3,6 +3,7 @@ from BlockDefence.game_files.game_loop import App
 
 
 def main():
+    """Run class instance of App.game_loop()."""
     app = App()
     app.game_loop()
 
