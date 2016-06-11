@@ -19,7 +19,7 @@ def set_towers(self, colors, coords):
 
     Args:
         self (class App): Main game class.
-        colors (tuple): Color of tower and aoe.
+        colors (list): Color of tower and aoe.
         coords (list): Contains all placed tower coordinates.
     """
     for i, coord in enumerate(coords):

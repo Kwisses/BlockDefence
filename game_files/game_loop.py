@@ -80,6 +80,14 @@ class App:
               x_displace=main_width / 8 + 50,
               y_displace=-20)
 
+        label(self, "v.1.0.0", white, size="xs",
+              x_displace=10,
+              y_displace=575)
+
+        label(self, "© 2016 Kwistech", white, size="xs",
+              x_displace=main_width - 125,
+              y_displace=575)
+
         while self.intro:
 
             button(self, text="Play", x=main_width / 8 + 75,
