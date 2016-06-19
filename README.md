@@ -35,7 +35,7 @@ Once the player clicks the "Play" button, the player will be brought to the main
 
 ## Game Mechanics ##
 
-Summary: The goal of the game is to complete all 10 levels without dieing. 
+Summary: The goal of the game is to complete all 10 levels without dying. 
 
 ### How To Play ##
 
