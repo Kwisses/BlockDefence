@@ -4,6 +4,8 @@ BlockDefence v.1.0.0
 
 BlockDefence is a tower defence game made with Python and Pygame
 
+Check the project's [Wiki](https://github.com/Kwistech/BlockDefence/wiki) for more info.
+
 ## Installation ##
 
 + Fork the repository and clone it to your local drive.
