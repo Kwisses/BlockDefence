@@ -1,6 +1,6 @@
 # <img src="http://s33.postimg.org/azs8d275r/logo.png" hspace="7" >BlockDefence</img>
 
-BlockDefence v.1.0.0
+BlockDefence v.1.0.0 (Python 3.5)
 
 BlockDefence is a tower defence game made with Python and Pygame
 
