@@ -19,13 +19,13 @@ There are 3 different game screens a player can navigate to: the main menu, the 
 
 ### Main Menu ###
 
-![](http://s33.postimg.org/u2pt11qrj/blockdefence_main_menu.png)
+[![blockdefence-main-menu.png](https://s4.postimg.org/7e2vrfqxp/blockdefence-main-menu.png)](https://postimg.org/image/r8oxdk655/)
 
 The player can either click the "Play" button to go to the main game, or click the "Tutorial" button which brings up the tutorial screen for the game:
 
 ### Tutorial ###
 
-![](http://s33.postimg.org/mizze5kn3/blockdefence_tutorial.png)
+[![blockdefence-tutorial.png](https://s1.postimg.org/456mnjwjz/blockdefence-tutorial.png)](https://postimg.org/image/81jyjjhjf/)
 
 The player can click the "Back" button on the Tutorial screen to go back to the main menu. 
 
@@ -33,7 +33,7 @@ Once the player clicks the "Play" button, the player will be brought to the main
 
 ### Main Game ###
 
-![](http://s33.postimg.org/te9p76y0v/blockdefence_main_game.png)
+[![blockdefence-main-game.png](https://s28.postimg.org/c9fcgsqod/blockdefence-main-game.png)](https://postimg.org/image/h82uvbuh5/)
 
 ## Game Mechanics ##
 
@@ -51,4 +51,4 @@ If an enemy gets to their target, you will lose a life and they will despawn. If
 
 ### In-game Screenshot ###
 
-![](http://s33.postimg.org/bz9hfw91b/blockdefence_in_game.png)
+[![blockdefence-in-game.png](https://s7.postimg.org/e54dgsyzv/blockdefence-in-game.png)](https://postimg.org/image/hbyx0fjfr/)
